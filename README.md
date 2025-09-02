@@ -53,19 +53,19 @@ Partiu de um projeto inical utilizando Gson de forma básica
 O Maven irá baixar automaticamente todas as dependências necessárias:
 bash
 
-    mvn clean install
+        mvn clean install
 
 3. Dependências Principais
 
 O projeto utiliza as seguintes dependências (já configuradas no pom.xml):
-
-    Gson 2.13.0: Para serialização/desserialização JSON
-
-    JUnit Jupiter: Para testes unitários
-
-    Maven Compiler Plugin: Para compilação Java
-
-    Maven Surefire Plugin: Para execução de testes
+    
+        Gson 2.13.0: Para serialização/desserialização JSON
+    
+        JUnit Jupiter: Para testes unitários
+    
+        Maven Compiler Plugin: Para compilação Java
+    
+        Maven Surefire Plugin: Para execução de testes
 
 4. Compilação do Projeto
     
@@ -80,22 +80,22 @@ O projeto utiliza as seguintes dependências (já configuradas no pom.xml):
 Ou compile e execute manualmente:
 bash
 
-    javac -cp "target/classes:$(mvn dependency:build-classpath -q -Dmdep.outputFile=/dev/stdout)" src/main/java/C14/CRM/Main.java
-    java -cp "target/classes:$(mvn dependency:build-classpath -q -Dmdep.outputFile=/dev/stdout)" C14.CRM.Main
+        javac -cp "target/classes:$(mvn dependency:build-classpath -q -Dmdep.outputFile=/dev/stdout)" src/main/java/C14/CRM/Main.java
+        java -cp "target/classes:$(mvn dependency:build-classpath -q -Dmdep.outputFile=/dev/stdout)" C14.CRM.Main
 
 # Comandos Maven Úteis
     
-    # Compilar o projeto
-    mvn compile
-    
-    # Executar testes
-    mvn test
-    
-    # Limpar e recompilar
-    mvn clean compile
-    
-    # Executar a aplicação principal
-    mvn exec:java -Dexec.mainClass="C14.CRM.Main"
-    
-    # Gerar jar executável
-    mvn package
+        # Compilar o projeto
+        mvn compile
+        
+        # Executar testes
+        mvn test
+        
+        # Limpar e recompilar
+        mvn clean compile
+        
+        # Executar a aplicação principal
+        mvn exec:java -Dexec.mainClass="C14.CRM.Main"
+        
+        # Gerar jar executável
+        mvn package
