@@ -43,10 +43,10 @@ Partiu de um projeto inical utilizando Gson de forma básica
 
 # Instalação e Configuração
 1. Clone ou baixe o projeto
-bash
+    
+       git clone [url-do-repositorio]
+       cd CRM
 
-   git clone [url-do-repositorio]
-   cd CRM
 
 2. Instalação das Dependências
 
@@ -69,11 +69,13 @@ O projeto utiliza as seguintes dependências (já configuradas no pom.xml):
 
 4. Compilação do Projeto
     
-    mvn compile
+
+        mvn compile
+
 
 5. Execução da Aplicação
     
-    mvn exec:java -Dexec.mainClass="C14.CRM.Main"
+        mvn exec:java -Dexec.mainClass="C14.CRM.Main"
     
 Ou compile e execute manualmente:
 bash
