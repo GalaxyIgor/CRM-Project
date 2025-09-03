@@ -99,3 +99,7 @@ bash
         
         # Gerar jar executável
         mvn package
+
+# Atividade de Correção de erros + testes
+Dentro da classe Oportunidades o contrutor foi multiplicado por -1 "this.valor = valor * (-1);" causando assim erro em 2 testes bem sucedidos antes do pull request, 
+mais tardar foi feita a correção no ultimo commit, foi falho em testDescricaoVaziaEAceitaPeloSistemaAtual e testValorNegativoEAceitoPeloSistemaAtual
