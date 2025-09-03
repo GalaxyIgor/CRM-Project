@@ -18,7 +18,7 @@ public class Oportunidade {
     public Oportunidade(String descricao, double valor) {
         this();
         this.descricao = descricao;
-        this.valor = valor;
+        this.valor = valor * (-1);
     }
 
     // Getters e Setters
