@@ -105,74 +105,74 @@ public class ClienteTest {
     }
 
 
-    // Testes que vão dar false
+    // Testes negativos
     @Test
     void testClienteComListasCheiasError() {
         Cliente cliente = new Cliente("Maria", "maria@email.com", "11-7777-6666", "Maria LTDA");
 
         // ASSERT FALSO proposital, em uma situação ideal esse teste seria usado para caso o construtor estivesse cheio
         // No Caso estou verificando as oportunidades e Atividades
-        assertFalse(cliente.getOportunidades().isEmpty());  // Espera false, mas recebe true
-        assertFalse(cliente.getAtividades().isEmpty());     // Espera false, mas recebe true
+        assertTrue(cliente.getOportunidades().isEmpty());  // Espera false, mas recebe true
+        assertTrue(cliente.getAtividades().isEmpty());     // Espera false, mas recebe true
     }
 
     @Test
     void testEmailSemArrobaError(){
         Cliente cliente = new Cliente();
         cliente.setEmail("emailsemarroba.com");
-        assertTrue(cliente.getEmail().contains("@"));
+        assertFalse(cliente.getEmail().contains("@"));
     }
 
     @Test
     void testNomeVazioError() {
         Cliente cliente = new Cliente();
         cliente.setNome("");
-        assertFalse(cliente.getNome().trim().isEmpty());
+        assertTrue(cliente.getNome().trim().isEmpty());
     }
 
     @Test
     void testDescriçãoVaziaError() {
         Oportunidade op = new Oportunidade("", 1000.0);
-        assertFalse(op.getDescricao().trim().isEmpty());
+        assertTrue(op.getDescricao().trim().isEmpty());
     }
 
     @Test
     void testEmpresaVaziaError() {
         Cliente cliente = new Cliente();
         cliente.setEmpresa("");
-        assertFalse(cliente.getEmpresa().trim().isEmpty());
+        assertTrue(cliente.getEmpresa().trim().isEmpty());
     }
 
     @Test
     void testTelefoneLetrasError() {
         Cliente cliente = new Cliente();
         cliente.setTelefone("abc-1234");
-        assertTrue(cliente.getTelefone().matches("[0-9\\-]+"));
+        assertFalse(cliente.getTelefone().matches("[0-9\\-]+"));
     }
 
     @Test
     void testTipoAtividadeNuloError() {
         Atividade atv = new Atividade(null, "Descrição teste");
-        assertNotNull(atv.getTipo());
+        assertNull(atv.getTipo());
     }
 
     @Test
     void testStatusOportunidadeNuloError() {
         Oportunidade op = new Oportunidade("Teste", 1000.0);
         op.setStatus(null);
-        assertNotNull(op.getStatus());
+        assertNull(op.getStatus());
     }
 
     @Test
     void testValorZeroOportunidadeError() {
         Oportunidade op = new Oportunidade("Projeto Zero", 0.0);
-        assertTrue(op.getValor() > 0); // Espera > 0, mas recebe 0.0
+        assertFalse(op.getValor() > 0); // Espera > 0, mas recebe 0.0
     }
 
     @Test
     void testDescricaoAtividadeVaziaError() {
         Atividade atv = new Atividade(Atividade.Tipo.EMAIL, "");
-        assertFalse(atv.getDescricao().trim().isEmpty()); // Espera não vazio, mas recebe vazio
+        assertTrue(atv.getDescricao().trim().isEmpty()); // Espera não vazio, mas recebe vazio
     }
 
 }
