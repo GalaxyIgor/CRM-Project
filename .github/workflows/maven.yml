@@ -28,6 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      run: |
         cd CRM
         mvn clean install
 
