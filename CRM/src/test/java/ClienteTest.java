@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClienteTest {
 
-    // Teste Que Vão Dar True
+    // Testes Positivos
     @Test
     void testCriacaoCliente() {
         Cliente cliente = new Cliente("João Silva", "joao@email.com", "11-9999-8888", "João Company");
@@ -15,7 +15,17 @@ public class ClienteTest {
         assertEquals("joao@email.com", cliente.getEmail()); // Recebe True
         assertEquals("11-9999-8888", cliente.getTelefone()); // Recebe True
         assertEquals("João Company", cliente.getEmpresa()); // Recebe True
+        assertTrue(cliente.getOportunidades().isEmpty());
+        assertTrue(cliente.getAtividades().isEmpty());
     }
+
+    @Test
+    void testClienteSemOportunidadesEAtividadesInicialmente() {
+        Cliente cliente = new Cliente("Lucas", "lucas@email.com", "33-1111-2222", "Empresa Z");
+        assertTrue(cliente.getOportunidades().isEmpty());
+        assertTrue(cliente.getAtividades().isEmpty());
+    }
+
 
     @Test
     void testAdicionarOportunidade() {
@@ -40,13 +50,12 @@ public class ClienteTest {
     }
 
     @Test
-    void testClienteComListasVazias() {
-        Cliente cliente = new Cliente("Maria", "maria@email.com", "11-7777-6666", "Maria LTDA");
-
-        //  ASSERT True proposital
-        assertTrue(cliente.getOportunidades().isEmpty());  // Recebe true
-        assertTrue(cliente.getAtividades().isEmpty());     // Recebe true
+    void testAlterarValorOportunidade() {
+        Oportunidade oportunidade = new Oportunidade("Upgrade Sistema", 2000.0);
+        oportunidade.setValor(3500.0);
+        assertEquals(3500.0, oportunidade.getValor());
     }
+
 
     @Test
     void testCriacaoDeOportunidade (){
@@ -58,7 +67,6 @@ public class ClienteTest {
     }
     @Test
     void testCriacaoDeAtividade (){
-        Cliente cliente = new Cliente("Teste", "teste@email.com", "00-0000-0000", "Teste");
         Atividade atividade = new Atividade(Atividade.Tipo.REUNIAO, "Reunião 18:00");
         assertNotNull(atividade.getId());
         assertEquals("Reunião 18:00", atividade.getDescricao());
@@ -66,14 +74,18 @@ public class ClienteTest {
     }
 
     @Test
-    void testAlterarStatusOportunidade(){
+    void testAlterarStatusOportunidade(){ // No caso aqui ele passa de aberta p/ ganha
         Oportunidade oportunidade = new Oportunidade("Projeto Teste", 3000.0);
 
         oportunidade.setStatus(Oportunidade.Status.GANHA);
         assertEquals(Oportunidade.Status.GANHA, oportunidade.getStatus());
+    }
 
-        oportunidade.setStatus(Oportunidade.Status.PERDIDA);
-        assertEquals(Oportunidade.Status.PERDIDA, oportunidade.getStatus());
+    @Test
+    void testAlterarDescricaoAtividade() {
+        Atividade atividade = new Atividade(Atividade.Tipo.LIGACAO, "Ligação inicial");
+        atividade.setDescricao("Ligação finalizada");
+        assertEquals("Ligação finalizada", atividade.getDescricao());
     }
 
     @Test
@@ -86,93 +98,71 @@ public class ClienteTest {
         assertEquals(Atividade.Tipo.REUNIAO, reuniao.getTipo());
         assertEquals(Atividade.Tipo.LIGACAO, ligacao.getTipo());
     }
-
-
-    @Test
-    void testValorNegativoEAceitoPeloSistemaAtual() {
-        Oportunidade op = new Oportunidade("Projeto com Valor Negativo", -1000.0);
-
-        assertEquals(-1000.0, op.getValor());
-        assertTrue(op.getValor() < 0);
-    }
+    // TESTES DE VALIDAÇÃO
 
     @Test
-    void testDescricaoVaziaEAceitaPeloSistemaAtual() {
-        Oportunidade op = new Oportunidade("", 500.0);
-
-        assertEquals("", op.getDescricao());
-        assertTrue(op.getDescricao().isEmpty());
-    }
-
-
-    // Testes negativos
-    @Test
-    void testClienteComListasCheiasError() {
-        Cliente cliente = new Cliente("Maria", "maria@email.com", "11-7777-6666", "Maria LTDA");
-
-        // ASSERT FALSO proposital, em uma situação ideal esse teste seria usado para caso o construtor estivesse cheio
-        // No Caso estou verificando as oportunidades e Atividades
-        assertTrue(cliente.getOportunidades().isEmpty());  // Espera false, mas recebe true
-        assertTrue(cliente.getAtividades().isEmpty());     // Espera false, mas recebe true
-    }
-
-    @Test
-    void testEmailSemArrobaError(){
+    void testEmailSemArrobaDeveError() {
         Cliente cliente = new Cliente();
-        cliente.setEmail("emailsemarroba.com");
-        assertFalse(cliente.getEmail().contains("@"));
+        assertThrows(IllegalArgumentException.class,
+                () -> cliente.setEmail("emailsemarroba.com"));
     }
 
     @Test
     void testNomeVazioError() {
         Cliente cliente = new Cliente();
-        cliente.setNome("");
-        assertTrue(cliente.getNome().trim().isEmpty());
+        assertThrows(IllegalArgumentException.class,
+                () -> cliente.setNome(""));
     }
 
     @Test
     void testDescriçãoVaziaError() {
-        Oportunidade op = new Oportunidade("", 1000.0);
-        assertTrue(op.getDescricao().trim().isEmpty());
+        assertThrows(IllegalArgumentException.class,
+                () -> new Oportunidade("", 1000.0));
     }
 
     @Test
     void testEmpresaVaziaError() {
         Cliente cliente = new Cliente();
-        cliente.setEmpresa("");
-        assertTrue(cliente.getEmpresa().trim().isEmpty());
+        assertThrows(IllegalArgumentException.class,
+                () -> cliente.setEmpresa(""));
     }
 
     @Test
-    void testTelefoneLetrasError() {
+    void testTelefoneInvalidoError() {
         Cliente cliente = new Cliente();
-        cliente.setTelefone("abc-1234");
-        assertFalse(cliente.getTelefone().matches("[0-9\\-]+"));
+        assertThrows(IllegalArgumentException.class,
+                () -> cliente.setTelefone("abc-1234"));
     }
 
     @Test
     void testTipoAtividadeNuloError() {
-        Atividade atv = new Atividade(null, "Descrição teste");
-        assertNull(atv.getTipo());
+        assertThrows(IllegalArgumentException.class,
+                () -> new Atividade(null, "Descrição teste"));
     }
 
     @Test
     void testStatusOportunidadeNuloError() {
         Oportunidade op = new Oportunidade("Teste", 1000.0);
-        op.setStatus(null);
-        assertNull(op.getStatus());
+        assertThrows(IllegalArgumentException.class,
+                () -> op.setStatus(null));
     }
 
     @Test
     void testValorZeroOportunidadeError() {
-        Oportunidade op = new Oportunidade("Projeto Zero", 0.0);
-        assertFalse(op.getValor() > 0); // Espera > 0, mas recebe 0.0
+        assertThrows(IllegalArgumentException.class,
+                () -> new Oportunidade("Projeto Zero", 0.0));
+    }
+
+    @Test
+    void testValorNegativoOportunidadeDeveFalhar() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Oportunidade("Projeto Negativo", -500.0));
     }
 
     @Test
     void testDescricaoAtividadeVaziaError() {
-        Atividade atv = new Atividade(Atividade.Tipo.EMAIL, "");
-        assertTrue(atv.getDescricao().trim().isEmpty()); // Espera não vazio, mas recebe vazio
+        assertThrows(IllegalArgumentException.class,
+                () -> new Atividade(Atividade.Tipo.EMAIL, ""));
     }
 
 }
