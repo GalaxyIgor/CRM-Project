@@ -12,24 +12,42 @@ public class Oportunidade {
 
     public Oportunidade() {
         this.id = UUID.randomUUID().toString();
-        this.status = Status.ABERTA;
+        this.status = Status.ABERTA; // Começa com aberta
     }
 
     public Oportunidade(String descricao, double valor) {
         this();
-        this.descricao = descricao;
-        this.valor = valor;
+        setDescricao(descricao);
+        setValor(valor);
     }
 
     // Getters e Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
+
     public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setDescricao(String descricao) {
+        if (descricao == null || descricao.trim().isEmpty()) {
+            throw new IllegalArgumentException("A descrição da oportunidade não pode ser vazia.");
+        }
+        this.descricao = descricao;
+    }
+
     public double getValor() { return valor; }
-    public void setValor(double valor) { this.valor = valor; }
+    public void setValor(double valor) {
+        if (valor <= 0) {
+            throw new IllegalArgumentException("O valor da oportunidade deve ser maior que zero.");
+        }
+        this.valor = valor;
+    }
+
     public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public void setStatus(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("O status da oportunidade não pode ser nulo.");
+        }
+        this.status = status;
+    }
 
     @Override
     public String toString() {

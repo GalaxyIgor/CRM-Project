@@ -17,17 +17,30 @@ public class Atividade {
 
     public Atividade(Tipo tipo, String descricao) {
         this();
-        this.tipo = tipo;
-        this.descricao = descricao;
+        setTipo(tipo);
+        setDescricao(descricao);
     }
 
     // Getters e Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
+
     public Tipo getTipo() { return tipo; }
-    public void setTipo(Tipo tipo) { this.tipo = tipo; }
+    public void setTipo(Tipo tipo) {
+        if (tipo == null) {
+            throw new IllegalArgumentException("O tipo da atividade não pode ser nulo.");
+        }
+        this.tipo = tipo;
+    }
+
     public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setDescricao(String descricao) {
+        if (descricao == null || descricao.trim().isEmpty()) {
+            throw new IllegalArgumentException("A descrição da atividade não pode ser vazia.");
+        }
+        this.descricao = descricao;
+    }
+
     public String getData() { return data; }
     public void setData(String data) { this.data = data; }
 
