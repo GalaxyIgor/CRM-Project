@@ -1,4 +1,7 @@
 # CRM-Project
+
+[![Java CI with Maven](https://github.com/GalaxyIgor/CRM-Project/actions/workflows/maven.yml/badge.svg)](https://github.com/GalaxyIgor/CRM-Project/actions/workflows/maven.yml)
+
 CRM Simplificado com Gson em Java
 
 Este projeto é um sistema de CRM (Customer Relationship Management) simplificado desenvolvido em Java, utilizando Maven para gerenciamento de dependências e Gson para persistência de dados em formato JSON.
