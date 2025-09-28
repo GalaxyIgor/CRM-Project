@@ -78,8 +78,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Install mailutils
-        run: sudo apt-get update && sudo apt-get install -y mailutils
-
-      - name: Send notification
-        run: echo "Build complete" | mail -s "Build complete" "${{ vars.EMAIL_RECIPIENT }}"
+      - name: Notification
+        env:
+          EMAIL_RECIPIENT: ${{ vars.EMAIL_RECIPIENT }}  
+        run: |
+          cd CRM
+          sh scripts/shell.sh
