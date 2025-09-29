@@ -67,7 +67,7 @@ jobs:
     needs: [build, teste]
 
     runs-on: ubuntu-latest
-
+    environment: CRM_ENV
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -78,7 +78,7 @@ jobs:
           cache: maven
       - name: Notification
         env:
-          EMAIL_RECIPIENT: ${{ vars.EMAIL_RECIPIENT }}  
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}  
         run: |
           cd CRM
           sh scripts/shell.sh
