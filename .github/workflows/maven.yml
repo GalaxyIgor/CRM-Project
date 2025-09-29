@@ -80,4 +80,4 @@ jobs:
         env:
           EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}  
         run: |
-          sh scripts/shell.sh
+          sh CRM/scripts/shell.sh
