@@ -21,6 +21,8 @@ Partiu de um projeto inical utilizando Gson de forma básica
 
 # Estrutura do Projeto
 
+    .github/workflows/
+        └── maven.yml
     CRM/
     ├── src/main/java/C14/CRM/
     │   ├── model/
@@ -34,6 +36,8 @@ Partiu de um projeto inical utilizando Gson de forma básica
     │   └── Main.java
     ├── data/clientes/ (gerado automaticamente)
     │   └── cliente_[id].json
+    ├── scripts/
+    │   └── shell.sh
     └── pom.xml
 
 # Pré-requisitos
